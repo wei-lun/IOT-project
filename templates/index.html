@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ansible UI</title>
+    <style type="text/css">
+   	 body{
+    		background-size: cover
+             }
+    </style>
+</head>
+<body text="#453A3A" background = "star.jpg">
+    <h1 style="color: lightgreen" align="center">Ansible UI</h1>
+    <div style="text-align: center;">
+    <form action="/run_playbook" method="post">
+        <label for="playbook_file" style="color: skyblue" text-align="center">Enter Playbook Name:</label><br>
+        <input type="text" id="playbook_file" name="playbook_file" align="center"><br><br>
+        <input type="submit" value="Run Playbook">
+ 	<div>
+        <label for="git_url" style="color: skyblue">Enter GitHub Repository URL:</label><br>
+        <input type="text" id="git_url" name="git_url"><br><br>
+        
+	<label for="github_token" style="color: skyblue">Enter GitHub Personal Access Token:</label><br>
+        <input type="text" id="github_token" name="github_token"><br><br>
+	</div>
+        <input type="submit" value="Run Playbook">
+    </form>
+    </div>
+    <div id="result">
+        {% if result %}
+            <pre>{{ result }}</pre>
+        {% endif %}
+    </div>
+</body>
+</html>
