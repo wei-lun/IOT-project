@@ -2,28 +2,43 @@
 <html>
 <head>
     <title>Ansible UI</title>
-    <style type="text/css">
-   	 body{
-    		background-size: cover
-             }
-    </style>
+    <link rel="stylesheet" href="/static/button_style.css">
 </head>
-<body text="#453A3A" background = "star.jpg">
+<body text="#453A3A" background = "/static/star.jpg">
     <h1 style="color: lightgreen" align="center">Ansible UI</h1>
     <div style="text-align: center;">
     <form action="/run_playbook" method="post">
-        <label for="playbook_file" style="color: skyblue" text-align="center">Enter Playbook Name:</label><br>
+        <label for="playbook_file" style="color: skyblue; text-align=center">Enter Playbook Name:</label><br>
         <input type="text" id="playbook_file" name="playbook_file" align="center"><br><br>
-        <input type="submit" value="Run Playbook">
- 	<div>
-        <label for="git_url" style="color: skyblue">Enter GitHub Repository URL:</label><br>
-        <input type="text" id="git_url" name="git_url"><br><br>
+        <input type="submit" value="upload">
+
+	<div class="github_container"> 	
+            <label for="git_url" class="git-pos" style="color: skyblue;">Enter GitHub Repository URL:</label><br>
+            <input type="text" id="git_url" name="git_url"><br><br>
         
-	<label for="github_token" style="color: skyblue">Enter GitHub Personal Access Token:</label><br>
-        <input type="text" id="github_token" name="github_token"><br><br>
+  	    <label for="github_token" class="git-pos"  style="color: skyblue;">Enter GitHub Personal Access Token:</label><br>
+            <input type="text" id="github_token" name="github_token"><br><br>
+
+            <input type="submit" value="download github file">
 	</div>
-        <input type="submit" value="Run Playbook">
     </form>
+    <div class="function_container">
+    <form action="/update_package" method="POST" class="form-container">
+        <input type="hidden" name="playbook" value="update_packages.yml">
+        <button type="submit">Update</button>
+    </form>
+
+    <form action="/download_file" method="POST" class="form-container">
+        <label for="file_url">File URL:</label>
+        <input type="text" id="file_url" name="file_url" required>
+        <button type="submit">Download</button>
+    </form>
+    </div>
+
+    <div class="button-container">
+        <a href="/receive_info" class="button">View host information</a>
+    </div>
+
     </div>
     <div id="result">
         {% if result %}

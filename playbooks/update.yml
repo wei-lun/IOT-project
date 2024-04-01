@@ -1,0 +1,12 @@
+---
+- name: Update Raspberry Pi packages
+  hosts: all
+  become: yes
+  tasks:
+    - name: Upgrade all packages
+      apt:
+        upgrade: dist
+
+    - name: Clean up apt cache
+      apt:
+        autoclean: yes

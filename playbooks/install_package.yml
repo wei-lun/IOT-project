@@ -1,0 +1,17 @@
+---
+- name: Install packages on Raspberry Pi
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install required packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - package1
+        - package2
+        

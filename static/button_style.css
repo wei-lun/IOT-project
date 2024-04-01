@@ -1,0 +1,30 @@
+/* button_style.css */
+body {
+    background-size: cover;
+}
+.button-container {
+  margin-top: 40px; /* 調整上邊距 */
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+.form-container{
+ margin-top: 20px;
+}
+.git-pos{
+  margin-top: 20px;
+}
+.github_container{
+  margin-top: 60px;
+}
+.function_container{
+  margin-top: 60px;
+}

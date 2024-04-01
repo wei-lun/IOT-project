@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raspberry Pi Info</title>
+    	<link rel="stylesheet" href="static/rpi_information.css">
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: lightgreen" align="center">Raspberry Pi Info</h1>
+        <div id="deviceInfo"></div>
+
+        <div>
+            <label for="hostIp">輸入 Host IP:</label>
+            <input type="text" id="hostIp" name="hostIp">
+            <button onclick="addHost()">新增到 Inventory</button>
+        </div> 
+    </div>
+    <script>
+	var hostData = {{ info | tojson | safe }};
+
+	function displayDeviceInfo(data) {
+   	    const deviceInfoDiv = document.getElementById('deviceInfo');
+    	    deviceInfoDiv.innerHTML = '';
+
+	        const infoDiv = document.createElement('div');
+            	infoDiv.classList.add('info');
+
+            	const nameHeading = document.createElement('h2');
+            	nameHeading.textContent = `Host: ${data.hostname}`;
+            	infoDiv.appendChild(nameHeading);
+
+            	const cpuUsageSpan = document.createElement('span');
+            	cpuUsageSpan.classList.add('info-label');
+            	cpuUsageSpan.textContent = 'CPU Usage: ';
+            	const cpuUsageValue = document.createElement('span');
+            	cpuUsageValue.textContent = `${data.cpu_usage}%`;
+            	infoDiv.appendChild(cpuUsageSpan);
+            	infoDiv.appendChild(cpuUsageValue);
+            	infoDiv.appendChild(document.createElement('br'));
+
+		//infoDiv.appendChild(document.createElement('span')).classList.add('separator');
+            	const memoryUsageSpan = document.createElement('span');
+            	memoryUsageSpan.classList.add('info-label');
+            	memoryUsageSpan.textContent = 'Memory Usage: ';
+            	const memoryUsageValue = document.createElement('span');
+            	memoryUsageValue.textContent = `${data.memory_usage}%`;
+            	infoDiv.appendChild(memoryUsageSpan);
+            	infoDiv.appendChild(memoryUsageValue);
+            	infoDiv.appendChild(document.createElement('br'));
+
+		//infoDiv.appendChild(document.createElement('span')).classList.add('separator');
+            	const networkInfoSpan = document.createElement('span');
+            	networkInfoSpan.classList.add('info-label');
+            	networkInfoSpan.textContent = 'Network Info: ';
+            	const networkInfoPre = document.createElement('pre');
+            	networkInfoPre.textContent = JSON.stringify(data.network_info, null, 2);
+            	infoDiv.appendChild(networkInfoSpan);
+            	infoDiv.appendChild(networkInfoPre);
+
+            	deviceInfoDiv.appendChild(infoDiv);
+   		
+	}
+	displayDeviceInfo(hostData);
+	setInterval(fetchDeviceInfo,5000);
+
+	function addHost() {
+    var hostIp = document.getElementById('hostIp').value;
+    if (hostIp.trim() !== '') {
+        fetch('/add_host', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ hostIp: hostIp })
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            alert('已將 ' + hostIp + ' 新增到 Inventory.ini');
+        })
+        .catch(error => {
+            console.error('新增 Host 發生錯誤:', error);
+            alert('新增 Host 發生錯誤');
+        });
+    } else {
+        alert('請輸入有效的 Host IP');
+    }
+}
+    </script>   
+</body>
+</html>
+                 

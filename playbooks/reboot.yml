@@ -1,0 +1,7 @@
+---
+- name: Reboot Raspberry Pi
+  hosts: all
+  become: yes
+  tasks:
+    - name: Reboot Raspberry Pi
+      shell: reboot

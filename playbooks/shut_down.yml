@@ -1,0 +1,7 @@
+---
+- name: Shutdown Raspberry Pi
+  hosts: all
+  become: yes
+  tasks:
+    - name: Shutdown Raspberry Pi
+      shell: shutdown now
